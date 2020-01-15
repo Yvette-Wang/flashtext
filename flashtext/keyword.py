@@ -523,6 +523,7 @@ class KeywordProcessor(object):
                             idx = sequence_end_pos
                     current_dict = self.keyword_trie_dict
                     if longest_sequence_found:
+                        idx -= 1
                         keywords_extracted.append((longest_sequence_found, sequence_start_pos, idx))
                     reset_current_dict = True
                 else:
@@ -639,9 +640,10 @@ class KeywordProcessor(object):
                             current_word = current_word_continued
                     current_dict = self.keyword_trie_dict
                     if longest_sequence_found:
-                        new_sentence.append(longest_sequence_found + current_white_space)
+                        new_sentence.append(longest_sequence_found) # + current_white_space)
                         current_word = ''
                         current_white_space = ''
+                        idx -= 1
                     else:
                         new_sentence.append(current_word)
                         current_word = ''
