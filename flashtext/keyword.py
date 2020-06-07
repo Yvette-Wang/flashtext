@@ -42,13 +42,13 @@ class KeywordProcessor(object):
                 Defaults to False
         """
         self._keyword = '_keyword_'
-        self._white_space_chars = set(['.', '\t', '\n', '\a', ' ', ','])
+        self._white_space_chars = set(['.', '\t', '\n', '\a', ' ', ',',''])
         try:
             # python 2.x
-            self.non_word_boundaries = set(string.digits + string.letters + '_')
+            self.non_word_boundaries = set([])
         except AttributeError:
             # python 3.x
-            self.non_word_boundaries = set(string.digits + string.ascii_letters + '_')
+            self.non_word_boundaries = set([])
         self.keyword_trie_dict = dict()
         self.case_sensitive = case_sensitive
         self._terms_in_trie = 0
@@ -483,7 +483,6 @@ class KeywordProcessor(object):
             char = sentence[idx]
             # when we reach a character that might denote word end
             if char not in self.non_word_boundaries:
-
                 # if end is present in current_dict
                 if self._keyword in current_dict or char in current_dict:
                     # update longest sequence found
@@ -640,7 +639,7 @@ class KeywordProcessor(object):
                             current_word = current_word_continued
                     current_dict = self.keyword_trie_dict
                     if longest_sequence_found:
-                        new_sentence.append(longest_sequence_found) # + current_white_space)
+                        new_sentence.append(longest_sequence_found)# + current_white_space)
                         current_word = ''
                         current_white_space = ''
                         idx -= 1
